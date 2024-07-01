@@ -4,7 +4,7 @@
 
 ## About
 
-This repo contains web patches to use with various games unsupported by [spice2x](https://spice2x.github.io/). We have a [spice2x patcher](https://github.com/two-torial/sp2xpatcher/) for those.   
+This repo contains web patches for games incompatible with [spice2x](https://spice2x.github.io/). See our [spice2x patcher](https://github.com/two-torial/sp2xpatcher/) for those.   
 We'll be keeping the **repo public** and **url alive** for as long as possible, **feel free to [contibute](#Contributing)** for the community through pull requests!
 
 ## Usage
