@@ -25,7 +25,6 @@
 
 .subsection {
   grid-column: 1 / -1;
-  background-color: #a2a2a2;
   margin: unset;
   /* I don't understand anything */
   margin-right: -15px;
@@ -53,7 +52,6 @@
 
 label.gameicon {
   cursor: pointer;
-  background: #fffcf0;
 }
 
 input.sectionToggle,
@@ -95,14 +93,9 @@ input:checked.sectionToggle + div {
   cursor: pointer;
 }
 
-.error {
-  color: red;
-}
-
 .success {
   text-align: center;
   border-radius: 10px;
-  color: #40a02b;
 }
 
 .success.hidden {
@@ -110,7 +103,6 @@ input:checked.sectionToggle + div {
 }
 
 .patchContainer {
-  background-color: white;
   padding: 20px;
   max-width: 650px;
   margin: 0 auto 2em;
@@ -162,13 +154,8 @@ input:checked.sectionToggle + div {
   display: none;
 }
 
-.danger {
-  background: #fe640b !important;
-}
-
 .danger:before {
   content: "!!";
-  background: #fe640b;
 }
 
 body {
@@ -197,10 +184,6 @@ h5 {
   margin: 0px auto;
 }
 
-a {
-  color: #1e66f5;
-}
-
 button,
 .fileLabel > strong {
   transition-duration: 0.2s;
@@ -212,10 +195,8 @@ button,
   font-size: 0.875rem;
   font-weight: 700;
   letter-spacing: 0.04em;
-  color: rgba(0, 0, 0, 0.73);
   transition-property: box-shadow, background;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25), 0px 0px 2px rgba(0, 0, 0, 0.125);
-  color: white;
   cursor: pointer;
 }
 
@@ -360,7 +341,7 @@ input[type="checkbox"]:checked ~ ul > li.patch-off {
     color: #cad3f5;
   }
   a {
-    color: #8aadf4;
+    color: #c6a0f6;
   }
   .gameicon,
   .patchContainer {
@@ -372,7 +353,8 @@ input[type="checkbox"]:checked ~ ul > li.patch-off {
   .subsection {
     background-color: #363a4f;
   }
-  .matchPercent {
+  .matchPercent,
+  .error {
     color: #ed8796;
   }
   .matchSuccess {
@@ -384,7 +366,7 @@ input[type="checkbox"]:checked ~ ul > li.patch-off {
   }
   button,
   .fileLabel > strong {
-    background-color: #8bd5ca;
+    background-color: #c6a0f6;
     color: #000;
   }
   button:disabled {
@@ -397,7 +379,7 @@ input[type="checkbox"]:checked ~ ul > li.patch-off {
   }
   .danger,
   .danger:before {
-    background-color: #f5a97f;
+    background-color: #f5a97f !important;
   }
 }
 
@@ -408,7 +390,7 @@ input[type="checkbox"]:checked ~ ul > li.patch-off {
     color: #4c4f69;
   }
   a {
-    color: #1e66f5;
+    color: #8839ef;
   }
   .gameicon,
   .patchContainer {
@@ -420,7 +402,8 @@ input[type="checkbox"]:checked ~ ul > li.patch-off {
   .subsection {
     background-color: #ccd0da;
   }
-  .matchPercent {
+  .matchPercent,
+  .error {
     color: #d20f39;
   }
   .matchSuccess {
@@ -432,7 +415,7 @@ input[type="checkbox"]:checked ~ ul > li.patch-off {
   }
   button,
   .fileLabel > strong {
-    background-color: #179299;
+    background-color: #8839ef;
     color: #fff;
   }
   button:disabled {
