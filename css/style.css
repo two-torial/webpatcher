@@ -387,6 +387,10 @@ input[type="checkbox"]:checked ~ ul > li.patch-off {
     background-color: #8bd5ca;
     color: #000;
   }
+  button:disabled {
+    background-color: #ffffff05;
+    color: #ffffff55;
+  }
   .tooltip,
   .tooltip:before {
     background-color: #8087a2;
@@ -430,6 +434,10 @@ input[type="checkbox"]:checked ~ ul > li.patch-off {
   .fileLabel > strong {
     background-color: #179299;
     color: #fff;
+  }
+  button:disabled {
+    background-color: rgba(0, 0, 0, 0.12);
+    color: rgba(0, 0, 0, 0.38);
   }
   .tooltip,
   .tooltip:before {
