@@ -291,7 +291,6 @@ input[type="radio"] {
 .dragover::after {
   content: "\e900";
   font-family: "file" !important;
-  speak: none;
   font-style: normal;
   font-weight: normal;
   font-variant: normal;
@@ -300,7 +299,6 @@ input[type="radio"] {
   /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
   display: block;
   height: auto;
   position: absolute;
