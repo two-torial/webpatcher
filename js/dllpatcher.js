@@ -512,6 +512,11 @@ class NumberPatch {
         this.size = options.size;
         this.min = options.min;
         this.max = options.max;
+        this.littleEndian = options.littleEndian ?? true;
+
+        if (![1, 2, 4].includes(this.size)) {
+            throw new Error(`Unsupported number size: ${this.size}.`);
+        }
     }
 
     createUI(parent) {
@@ -522,6 +527,7 @@ class NumberPatch {
         patch.appendChild(createLabel(label, id));
 
         this.number = createInput('number', id);
+        this.number.style.width = "3rem";
         if (this.min !== null) {
             this.number.min = this.min;
         }
@@ -543,15 +549,20 @@ class NumberPatch {
     }
 
     updateUI(file) {
-        // This converts bytes from the file to big endian by shifting each
-        // byte `i` bytes to the left then doing a bitwise OR to add the less
-        // significant bytes that were gathered at earlier iterations of loop
-        var val = 0;
+        const arr = new Uint8Array(this.size);
+        const view = new DataView(arr.buffer);
+
         for (var i = 0; i < this.size; i++) {
-            val = (file[this.offset + i] << (8 * i)) | val;
+            arr[i] = file[this.offset + i];
         }
 
-        this.number.value = val;
+        if (this.size === 1) {
+            this.number.value = view.getInt8(0);
+        } else if (this.size === 2) {
+            this.number.value = view.getInt16(0, this.littleEndian);
+        } else if (this.size === 4) {
+            this.number.value = view.getInt32(0, this.littleEndian);
+        }
     }
 
     validatePatch(file) {
@@ -560,20 +571,19 @@ class NumberPatch {
 
     applyPatch(file) {
         // Convert user inputted number to little endian
-        const view = new DataView(new ArrayBuffer(this.size * 2));
-        view.setInt32(1, this.number.value, true);
+        const arr = new Uint8Array(this.size);
+        const view = new DataView(arr.buffer);
+
+        if (this.size === 1) {
+            view.setInt8(0, this.number.value);
+        } else if (this.size === 2) {
+            view.setInt16(0, this.number.value, this.littleEndian);
+        } else if (this.size === 4) {
+            view.setInt32(0, this.number.value, this.littleEndian);
+        }
 
         for (var i = 0; i < this.size; i++) {
-            var val = view.getInt32(1);
-
-            // Shift off less significant bytes
-            val = val >> ((this.size - 1 - i) * 8);
-
-            // Mask off more significant bytes
-            val = val & 0xFF;
-
-            // Write this byte
-            file[this.offset + i] = val;
+            file[this.offset + i] = arr[i];
         }
     }
 }
