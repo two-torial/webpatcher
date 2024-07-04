@@ -90,8 +90,30 @@
                         name: "Force FREE PLAY credit text",
                         tooltip: "Replaces the credit count with FREE PLAY",
                         patches: [
-                            {offset: 0x387394, off: [0x3c, 0x01], on: [0x38, 0xc0]}
-                        ]
+                            { offset: 0x387394, off: [0x3c, 0x01], on: [0x38, 0xc0] },
+                        ],
+                    },
+                    {
+                        type: "number",
+                        name: "Custom FREE PLAY text length",
+                        tooltip: "Changes the length of the text displayed when enabling \"Force FREE PLAY credit text\"",
+                        danger: "If this is longer than 11 characters, \"Force FREE PLAY credit text\" MUST be enabled.",
+                        offset: 0x387399,
+                        size: 1,
+                        min: 0,
+                        max: 27,
+                    },
+                    {
+                        type: "hex",
+                        name: "Custom FREE PLAY text",
+                        danger: "The text must be hex-encoded ASCII bytes and must be the same length as the \"Custom FREE PLAY text length\" configured above. If the text is shorter than 27 characters, pad the rest with null (00) bytes.",
+                        offset: 0x19d88c4,
+                        off: [
+                            0x46, 0x52, 0x45, 0x45, 0x20, 0x50, 0x4c, 0x41,
+                            0x59, 0x00, 0x00, 0x00, 0x43, 0x52, 0x45, 0x44,
+                            0x49, 0x54, 0x28, 0x53, 0x29, 0x20, 0x3A, 0x20,
+                            0x00, 0x00, 0x00,
+                        ],
                     },
                     {
                         type: "hex",
@@ -204,25 +226,30 @@
                         name: "Force FREE PLAY credit text",
                         tooltip: "Replaces the credit count with FREE PLAY",
                         patches: [
-                            {offset: 0x387394, off: [0x3c, 0x01], on: [0x38, 0xc0]}
-                        ]
+                            { offset: 0x387394, off: [0x3c, 0x01], on: [0x38, 0xc0] },
+                        ],
                     },
-                    // currently broken due to how type: "number" is implemented in dllpatcher.js. left here for when a solution is found
-                    //{
-                    //    type: "number",
-                    //    name: "Custom credit text length",
-                    //    tooltip: "Changes the length of the text displayed when Force FREE PLAY credit text is enabled",
-                    //    offset: 0x387399,
-                    //    size: 1,
-                    //    min: 0,
-                    //    max: 11,
-                    //},
+                    {
+                        type: "number",
+                        name: "Custom FREE PLAY text length",
+                        tooltip: "Changes the length of the text displayed when enabling \"Force FREE PLAY credit text\"",
+                        danger: "If this is longer than 11 characters, \"Force FREE PLAY credit text\" MUST be enabled.",
+                        offset: 0x387399,
+                        size: 1,
+                        min: 0,
+                        max: 27,
+                    },
                     {
                         type: "hex",
                         name: "Custom FREE PLAY text",
-                        tooltip: "Replace the FREE PLAY text when using Infinite credits",
+                        danger: "The text must be hex-encoded ASCII bytes and must be the same length as the \"Custom FREE PLAY text length\" configured above. If the text is shorter than 27 characters, pad the rest with null (00) bytes.",
                         offset: 0x19d9cd4,
-                        off: [0x46, 0x52, 0x45, 0x45, 0x20, 0x50, 0x4c, 0x41, 0x59],
+                        off: [
+                            0x46, 0x52, 0x45, 0x45, 0x20, 0x50, 0x4c, 0x41,
+                            0x59, 0x00, 0x00, 0x00, 0x43, 0x52, 0x45, 0x44,
+                            0x49, 0x54, 0x28, 0x53, 0x29, 0x20, 0x3A, 0x20,
+                            0x00, 0x00, 0x00,
+                        ],
                     },
                     {
                         name: "Disable shop close lockout",
