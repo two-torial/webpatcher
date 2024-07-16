@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>中二节奏 NEW!! Modder</title>
+        <link rel="stylesheet" href="css/style.css">
+        <script type="text/javascript" src="js/dllpatcher.js"></script>
+        <script type="text/javascript">
+            window.addEventListener("load", function () {
+                new PatchContainer([
+                    new Patcher("chusanApp.exe", "1.00.00", [
+                    {
+                        name: "Force shared audio mode, system audio samplerate must be 48000",
+                        tooltip: "Improves compatibility but may increase latency",
+                        patches: [
+                            {offset: 0xE69B9A, off: [0x01], on: [0x00]},
+                        ],
+                    },
+                    {
+                        name: "Force 2 channel audio output",
+						tooltip: "May cause bass overload",
+                        patches: [
+                            {offset: 0xE69C71, off: [0x75, 0x3F], on: [0x90, 0x90]},
+                        ],
+                    },
+                    {
+                        name: "Disable Song Select Timer",
+                        patches: [
+                            {offset: 0x96902B, off: [0x74], on: [0xEB]},
+                        ],
+                    },
+                    {
+                        name: "Set All Timers to 999",
+						danger: "May breaks some functionality",
+                        patches: [
+                            {offset: 0x800510, off: [0x8B, 0x44, 0x24, 0x04, 0x69, 0xC0, 0xE8, 0x03, 0x00, 0x00], on: [0xB8, 0x58, 0x3E, 0x0F, 0x00, 0x90, 0x90, 0x90, 0x90, 0x90]},
+                        ],
+                    },
+                    {
+                        name: "No Encryption",
+                        tooltip: "Title server workaround",
+                        patches: [
+                            {offset: 0x1CC83D8, off: [0x64], on: [0x00]},
+                            {offset: 0x1CC83DC, off: [0x64], on: [0x00]},
+                        ]
+                    },
+                    {
+                        name: "Force 120 fps",
+                        tooltip: "Force the game to run in 120 Hz mode.",
+                        patches: [
+                            {offset: 0x1D7E9, off: [0x00], on: [0x01]}
+                        ]
+                    }
+                ])
+                ]);
+            });
+        </script>
+    </head>
+    <body>
+        <h1>中二节奏 NEW!! Modder</h1>
+    </body>
+</html>
