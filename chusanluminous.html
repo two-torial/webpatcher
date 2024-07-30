@@ -282,6 +282,14 @@
                         patches: [
                             {offset: 0x2bbbc8, off: [0x28], on: [0x08]}
                         ]
+                    },
+                    {
+                        name: "OpenSSL SHA crash bug fix",
+                        tooltip: "Fix crashes on 10th generation and newer Intel CPUs",
+                        patches: [
+                            { offset: 0x4d5643, off: [0x48], on: [0x4c] },
+                            { offset: 0x4d564b, off: [0x48], on: [0x49] }
+                        ]
                     }
                 ]),
                 new Patcher("amdaemon.exe", "2.22.00", [
@@ -297,7 +305,15 @@
                         patches: [
                             {offset: 0x2bafc8, off: [0x28], on: [0x08]}
                         ]
-                    }
+                    },
+                    {
+                        name: "OpenSSL SHA crash bug fix",
+                        tooltip: "Fix crashes on 10th generation and newer Intel CPUs",
+                        patches: [
+                            { offset: 0x4d4a43, off: [0x48], on: [0x4c] },
+                            { offset: 0x4d4a4b, off: [0x48], on: [0x49] },
+                        ]
+                    },
                 ])
             ]);
         });
