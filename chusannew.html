@@ -138,7 +138,15 @@
                         patches: [
                             {offset: 0x2bb928, off: [0x28], on: [0x08]}
                         ]
-                    }
+                    },
+                    {
+                        name: "OpenSSL SHA crash bug fix",
+                        tooltip: "Fix crashes on 10th generation and newer Intel CPUs",
+                        patches: [
+                            { offset: 0x4c3c43, off: [0x48], on: [0x4c] },
+                            { offset: 0x4c3c4b, off: [0x48], on: [0x49] },
+                        ]
+                    },
                 ])
             ]);
         });
