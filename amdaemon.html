@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>amdaemon Modder</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script type="text/javascript" src="js/dllpatcher.js"></script>
+    <script type="text/javascript">
+        window.addEventListener("load", function () {
+            new PatchContainer([
+                // amdaemonExe Ver.2592 Build:Nov 15 2018 15:22:03
+                // Games: SDDS 2.30
+                new Patcher("amdaemon.exe", "2592", [
+                    {
+                        name: "Allow 127.0.0.1/localhost as the network server",
+                        patches: [
+                            {
+                                offset: 0x64105C,
+                                off: [0x31, 0x32, 0x37, 0x2F],
+                                on: [0x30, 0x2F, 0x38, 0x00]
+                            },
+                            {
+                                offset: 0x36B514,
+                                off: [0xFF, 0x15, 0xFE, 0x62, 0x19, 0x00, 0x8B],
+                                on: [0x33, 0xC0, 0x48, 0x83, 0xC4, 0x28, 0xC3]
+                            }
+                        ]
+                    },
+                    {
+                        name: "Credit freeze",
+                        tooltip: "Prevents credits from being used. At least one credit must be available to start the game or purchase premium tickets.",
+                        patches: [
+                            { offset: 0x286288, off: [0x28], on: [0x08] }
+                        ]
+                    },
+                    {
+                        name: "OpenSSL SHA crash bug fix",
+                        tooltip: "Fixes crashing on 10th generation and newer Intel CPUs",
+                        patches: [
+                            { offset: 0x46E443, off: [0x48], on: [0x4C] },
+                            { offset: 0x46E44B, off: [0x48], on: [0x49] }
+                        ]
+                    },
+                ]),
+
+                // amdaemonExe Ver.2680 Build:May 10 2019 14:50:56
+                // Games: SDFL 1.00
+                new Patcher("amdaemon.exe", "2680", [
+                    {
+                        name: "Allow 127.0.0.1/localhost as the network server",
+                        patches: [
+                            {
+                                offset: 0x624E84,
+                                off: [0x31, 0x32, 0x37, 0x2F],
+                                on: [0x30, 0x2F, 0x38, 0x00]
+                            },
+                            {
+                                offset: 0x35D754,
+                                off: [0xFF, 0x15, 0xAE, 0x50, 0x19, 0x00, 0x8B],
+                                on: [0x33, 0xC0, 0x48, 0x83, 0xC4, 0x28, 0xC3]
+                            }
+                        ]
+                    },
+                    {
+                        name: "Credit freeze",
+                        tooltip: "Prevents credits from being used. At least one credit must be available to start the game or purchase premium tickets.",
+                        patches: [
+                            { offset: 0x27E438, off: [0x28], on: [0x08] }
+                        ]
+                    },
+                    {
+                        name: "OpenSSL SHA crash bug fix",
+                        tooltip: "Fixes crashing on 10th generation and newer Intel CPUs",
+                        patches: [
+                            { offset: 0x45F543, off: [0x48], on: [0x4C] },
+                            { offset: 0x45F54B, off: [0x48], on: [0x49] }
+                        ]
+                    },
+                ]),
+
+                // amdaemonExe Ver.46d47eab Build:Sep 25 2020 16:08:48
+                // Common version used for Unity games because it's a lot
+                // simpler to reuse an older version.
+                new Patcher("amdaemon.exe", "46d47eab", [
+                    {
+                        name: "Allow 127.0.0.1/localhost as the network server",
+                        patches: [
+                            {
+                                offset: 0x69042C,
+                                off: [0x31, 0x32, 0x37, 0x2F],
+                                on: [0x30, 0x2F, 0x38, 0x00]
+                            },
+                            {
+                                offset: 0x3A0E34,
+                                off: [0xFF, 0x15, 0x86, 0xD5, 0x19, 0x00, 0x8B],
+                                on: [0x33, 0xC0, 0x48, 0x83, 0xC4, 0x28, 0xC3]
+                            }
+                        ]
+                    },
+                    {
+                        name: "Credit freeze",
+                        tooltip: "Prevents credits from being used. At least one credit must be available to start the game or purchase premium tickets.",
+                        patches: [
+                            { offset: 0x2AB4E8, off: [0x28], on: [0x08] }
+                        ]
+                    },
+                    {
+                        name: "OpenSSL SHA crash bug fix",
+                        tooltip: "Fixes crashing on 10th generation and newer Intel CPUs",
+                        patches: [
+                            { offset: 0x4A4C43, off: [0x48], on: [0x4C] },
+                            { offset: 0x4A4C4B, off: [0x48], on: [0x49] }
+                        ]
+                    },
+                ]),
+
+                // amdaemonExe Ver.5492e950 Build:Jul 30 2021 13:15:23
+                // Games: SDGT 1.30-2.31
+                new Patcher("amdaemon.exe", "5492e950", [
+                    {
+                        name: "Allow 127.0.0.1/localhost as the network server",
+                        patches: [
+                            {
+                                offset: 0x65EACC,
+                                off: [0x31, 0x32, 0x37, 0x2F],
+                                on: [0x30, 0x2F, 0x38, 0x00],
+                            },
+                            {
+                                offset: 0x37F3B4,
+                                off: [0xFF, 0x15, 0x0E, 0xC4, 0x19, 0x00, 0x8B],
+                                on: [0x33, 0xC0, 0x48, 0x83, 0xC4, 0x28, 0xC3]
+                            }
+                        ]
+                    },
+                    {
+                        name: "Credit freeze",
+                        tooltip: "Prevents credits from being used. At least one credit must be available to start the game or purchase premium tickets.",
+                        patches: [
+                            { offset: 0x29D008, off: [0x28], on: [0x08] },
+                        ]
+                    },
+                    {
+                        name: "OpenSSL SHA crash bug fix",
+                        tooltip: "Fixes crashing on 10th generation and newer Intel CPUs",
+                        patches: [
+                            { offset: 0x483143, off: [0x48], on: [0x4C] },
+                            { offset: 0x48314B, off: [0x48], on: [0x49] }
+                        ]
+                    },
+                ]),
+
+                // amdaemonExe Ver.026fb4a0 Build:Aug 27 2021 19:45:52
+                // Games: SDHD 2.00-2.15
+                new Patcher("amdaemon.exe", "026fb4a0", [
+                    {
+                        name: "Allow 127.0.0.1/localhost as the network server",
+                        patches: [
+                            {
+                                offset: 0x3B6EF4,
+                                off: [0xFF, 0x15, 0x3E, 0x79, 0x1A, 0x00, 0x8B],
+                                on: [0x33, 0xC0, 0x48, 0x83, 0xC4, 0x28, 0xC3],
+                            },
+                            {
+                                offset: 0x6BC83C,
+                                off: [0x31, 0x32, 0x37, 0x2F],
+                                on: [0x30, 0x2F, 0x38, 0x00],
+                            },
+                        ],
+                    },
+                    {
+                        name: "Free Play",
+                        tooltip: "Endless credits",
+                        patches: [
+                            { offset: 0x2BB928, off: [0x28], on: [0x08] },
+                        ]
+                    },
+                    {
+                        name: "OpenSSL SHA crash bug fix",
+                        tooltip: "Fix crashes on 10th generation and newer Intel CPUs",
+                        patches: [
+                            { offset: 0x4C3C43, off: [0x48], on: [0x4C] },
+                            { offset: 0x4C3C4B, off: [0x48], on: [0x49] },
+                        ]
+                    },
+                ]),
+
+                // amdaemonExe Ver.8adb9cd0 Build:Oct 19 2021 16:01:50
+                // Games: SDEJ 10.80
+                new Patcher("amdaemon.exe", "8adb9cd0", [
+                    {
+                        name: "Allow 127.0.0.1/localhost as the network server",
+                        patches: [
+                            {
+                                offset: 0x6D3C04,
+                                off: [0x31, 0x32, 0x37, 0x2F],
+                                on: [0x30, 0x2F, 0x38, 0x00]
+                            },
+                            {
+                                offset: 0x3C61F4,
+                                off: [0xFF, 0x15, 0x6E, 0x92, 0x1A, 0x00, 0x8B],
+                                on: [0x33, 0xC0, 0x48, 0x83, 0xC4, 0x28, 0xC3]
+                            }
+                        ]
+                    },
+                    {
+                        name: "Credit freeze",
+                        tooltip: "Prevents credits from being used. At least one credit must be available to start the game or purchase premium tickets.",
+                        patches: [
+                            { offset: 0x2C8888, off: [0x28], on: [0x08] }
+                        ]
+                    },
+                    {
+                        name: "OpenSSL SHA crash bug fix",
+                        tooltip: "Fixes crashing on 10th generation and newer Intel CPUs",
+                        patches: [
+                            { offset: 0x4D2343, off: [0x48], on: [0x4C] },
+                            { offset: 0x4D234B, off: [0x48], on: [0x49] },
+                        ]
+                    },
+                ]),
+
+                // amdaemonExe Ver.18b7e916 Build:Oct 19 2021 21:12:01
+                // Games: SDGS 1.10
+                new Patcher("amdaemon.exe", "18b7e916", [
+                    {
+                        name: "Allow 127.0.0.1/localhost as the network server",
+                        patches: [
+                            {
+                                offset: 0x68F4C4,
+                                off: [0x31, 0x32, 0x37, 0x2F],
+                                on: [0x30, 0x2F, 0x38, 0x00],
+                            },
+                            {
+                                offset: 0x3974D4,
+                                off: [0xFF, 0x15, 0xBE, 0x5F, 0x1A, 0x00, 0x8B],
+                                on: [0x33, 0xC0, 0x48, 0x83, 0xC4, 0x28, 0xC3]
+                            }
+                        ]
+                    },
+                    {
+                        name: "Credit freeze",
+                        tooltip: "Prevents credits from being used. At least one credit must be available to start the game or purchase premium tickets.",
+                        patches: [
+                            { offset: 0x2AEAB8, off: [0x28], on: [0x08] }
+                        ]
+                    },
+                    {
+                        name: "OpenSSL SHA crash bug fix",
+                        tooltip: "Fixes crashing on 10th generation and newer Intel CPUs",
+                        patches: [
+                            { offset: 0x4A4243, off: [0x48], on: [0x4C] },
+                            { offset: 0x4A424B, off: [0x48], on: [0x49] }
+                        ]
+                    },
+                ]),
+
+                // amdaemonExe Ver.12dcfb76 Build:May 18 2022 22:37:21
+                // Games: SDHD 2.20
+                new Patcher("amdaemon.exe", "12dcfb76", [
+                    {
+                        name: "Allow 127.0.0.1/localhost as the network server",
+                        patches: [
+                            { offset: 0x6e28a4, off: [0x31, 0x32, 0x37, 0x2f], on: [0x30, 0x2f, 0x38, 0x00] },
+                            { offset: 0x3c94c4, off: [0xff, 0x15, 0xc6, 0x2f, 0x1b, 0x00, 0x8b], on: [0x33, 0xc0, 0x48, 0x83, 0xc4, 0x28, 0xc3] }
+                        ]
+                    },
+                    {
+                        name: "Credit freeze",
+                        tooltip: "Prevents credits from being used. At least one credit must be available to start the game or purchase premium tickets.",
+                        patches: [
+                            { offset: 0x2bbbc8, off: [0x28], on: [0x08] }
+                        ]
+                    },
+                    {
+                        name: "OpenSSL SHA crash bug fix",
+                        tooltip: "Fix crashes on 10th generation and newer Intel CPUs",
+                        patches: [
+                            { offset: 0x4d5643, off: [0x48], on: [0x4c] },
+                            { offset: 0x4d564b, off: [0x48], on: [0x49] }
+                        ]
+                    },
+                ]),
+                // Games: SDHD 2.22
+                new Patcher("amdaemon.exe", "12dcfb76 (alternative)", [
+                    {
+                        name: "Allow 127.0.0.1/localhost as the network server",
+                        patches: [
+                            { offset: 0x6e1ca4, off: [0x31, 0x32, 0x37, 0x2f], on: [0x30, 0x2f, 0x38, 0x00] },
+                            { offset: 0x3c88c4, off: [0xff, 0x15, 0xc6, 0x2f, 0x1b, 0x00, 0x8b], on: [0x33, 0xc0, 0x48, 0x83, 0xc4, 0x28, 0xc3] }
+                        ]
+                    },
+                    {
+                        name: "Credit freeze",
+                        tooltip: "Prevents credits from being used. At least one credit must be available to start the game or purchase premium tickets.",
+                        patches: [
+                            { offset: 0x2bafc8, off: [0x28], on: [0x08] }
+                        ]
+                    },
+                    {
+                        name: "OpenSSL SHA crash bug fix",
+                        tooltip: "Fix crashes on 10th generation and newer Intel CPUs",
+                        patches: [
+                            { offset: 0x4d4a43, off: [0x48], on: [0x4c] },
+                            { offset: 0x4d4a4b, off: [0x48], on: [0x49] },
+                        ]
+                    },
+                ]),
+
+                // amdaemonExe Ver.f29e03b4 Build:Sep 29 2022 21:52:26
+                // Games: SDGS 1.30
+                new Patcher("amdaemon.exe", "f29e03b4", [
+                    {
+                        name: "Allow 127.0.0.1/localhost as the network server",
+                        patches: [
+                            {
+                                offset: 0x6CD564,
+                                off: [0x31, 0x32, 0x37, 0x2F],
+                                on: [0x30, 0x2F, 0x38, 0x00]
+                            },
+                            {
+                                offset: 0x3B5C34,
+                                off: [0xFF, 0x15, 0x4E, 0x58, 0x1B, 0x00, 0x8B],
+                                on: [0x33, 0xC0, 0x48, 0x83, 0xC4, 0x28, 0xC3]
+                            }
+                        ]
+                    },
+                    {
+                        name: "Credit freeze",
+                        tooltip: "Prevents credits from being used. At least one credit must be available to start the game or purchase premium tickets.",
+                        patches: [
+                            { offset: 0x2B43A8, off: [0x28], on: [0x08] },
+                        ]
+                    },
+                    {
+                        name: "OpenSSL SHA crash bug fix",
+                        tooltip: "Fixes crashing on 10th generation and newer Intel CPUs",
+                        patches: [
+                            { offset: 0x4C1D43, off: [0x48], on: [0x4C] },
+                            { offset: 0x4C1D4B, off: [0x48], on: [0x49] }
+                        ]
+                    },
+                ]),
+            ]);
+        });
+    </script>
+</head>
+
+<body>
+    <h1>amdaemon Modder</h1>
+</body>
+
+</html>
