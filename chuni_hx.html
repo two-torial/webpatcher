@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>CHUNITHM PARADISE LOST (USA) Modder</title>
+        <link rel="stylesheet" href="css/style.css">
+        <script type="text/javascript" src="js/dllpatcher.js"></script>
+        <script type="text/javascript">
+            window.addEventListener("load", function () {
+            new PatchContainer([
+                new Patcher("chuniApp.exe", "1.51.00", [
+                    {
+                        name: "Force shared audio mode, system audio samplerate must be 48000",
+                        tooltip: "Improves compatibility but may increase latency",
+                        patches: [
+                            {offset: 0xC816BA, off: [0x01], on: [0x00]},
+                        ],
+                    },
+                    {
+                        name: "Force 2 channel audio output",
+                        tooltip: "May cause bass overload",
+                        patches: [
+                            {offset: 0xC81791, off: [0x75, 0x3F], on: [0x90, 0x90]},
+                        ],
+                    },
+                    {
+                        name: "Disable Song Select Timer",
+                        tooltip: "May only work when playing with card.",
+                        patches: [
+                            {offset: 0x782C22, off: [0x74], on: [0xEB]},
+                        ],
+                    },
+                    {
+                        name: "Set All Timers to 999",
+                        patches: [
+                            {offset: 0x62BF30, off: [0x8B, 0x44, 0x24, 0x04, 0x69, 0xC0, 0xE8, 0x03, 0x00, 0x00], on: [0xB8, 0x58, 0x3E, 0x0F, 0x00, 0x90, 0x90, 0x90, 0x90, 0x90]},
+                        ],
+                    },
+                    {
+                        name: "Free Play",
+                        tooltip: "Endless credits",
+                        patches: [
+                            {offset: 0xC456C5, off: [0x28], on: [0x08]},
+                        ],
+                    },
+                ])
+                ]);
+            });
+        </script>
+    </head>
+    <body>
+        <h1>CHUNITHM PARADISE LOST (USA) Modder</h1>
+    </body>
+</html>
+
