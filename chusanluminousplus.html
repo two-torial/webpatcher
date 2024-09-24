@@ -85,6 +85,52 @@
                         patches: [
                             {offset: 0x1CCB1, off: [0x85, 0xc0], on: [0xeb, 0x30]}
                         ]
+                    },
+                    {
+                        name: "Force FREE PLAY credit text",
+                        tooltip: "Replaces the credit count with FREE PLAY",
+                        patches: [
+                            {offset: 0x3875A4, off: [0x3c, 0x01], on: [0x38, 0xc0]}
+                        ]
+                    },
+                    {
+                        type: "number",
+                        name: "Custom FREE PLAY text length",
+                        tooltip: "Changes the length of the text displayed when Force FREE PLAY credit text is enabled",
+						danger: "If this is longer than 11 characters, \"Force FREE PLAY credit text\" MUST be enabled.",
+                        offset: 0x3875A9,
+                        size: 1,
+                        min: 0,
+                        max: 27,
+                    },
+                    {
+                        type: "hex",
+                        name: "Custom FREE PLAY text",
+                        tooltip: "Replace the FREE PLAY text when using Infinite credits",
+                        offset: 0x19F5D1C,
+                        off: [0x46, 0x52, 0x45, 0x45, 0x20, 0x50, 0x4c, 0x41, 0x59],
+                    },
+                    {
+                        name: "Disable shop close lockout",
+                        danger: "[DEPRECATED] Just disable it in the test menu",
+                        patches: [
+                            {offset: 0xC018E3, off: [0x74], on: [0xeb]}
+                        ]
+                    },
+                    {
+                        name: "Bypass LED board check",
+                        danger: "[DEPRECATED] Forces LED board check to good and auto continues",
+                        patches: [
+                            {offset: 0x9D47FA, off: [0x01], on: [0x00]},
+                            {offset: 0x9D47FF, off: [0x00], on: [0x01]}
+                        ]
+                    },
+                    {
+                        name: "Ignore some errors from amdaemon",
+                        danger: "[DEPRECATED] May relieve some errors like error 6401, but may also cause problems elsewhere.",
+                        patches: [
+                            {offset: 0x37DCFB, off: [0x75], on: [0xeb]}
+                        ]
                     }
                 ]),
 			]);
