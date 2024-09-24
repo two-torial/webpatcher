@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>CHUNITHM LUMINOUS PLUS Modder</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script type="text/javascript" src="js/dllpatcher.js"></script>
+    <script type="text/javascript">
+        window.addEventListener("load", function () {
+            new PatchContainer([
+                new Patcher("chusanApp.exe", "2.26.00", [
+                    {
+                        name: "Force shared audio mode, system audio sample rate must be 48000Hz",
+                        tooltip: "Improves compatibility, but may increase latency",
+                        patches: [
+                            {offset: 0xF233DA, off: [0x01], on: [0x00]}
+                        ]
+                    },
+                    {
+                        name: "Force 2 channel audio output",
+                        tooltip: "May cause bass overload",
+                        patches: [
+                            {offset: 0xF234B1, off: [0x75, 0x3f], on: [0x90, 0x90]}
+                        ]
+                    },
+                    {
+                        name: "Disable song select timer",
+                        patches: [
+                            {offset: 0xA03916, off: [0x74], on: [0xeb]}
+                        ]
+                    },
+                    {
+                        name: "Set all timers to 999",
+                        danger: "Breaks online matching functionality",
+                        patches: [
+                            {offset: 0x8791B0, off: [0x8b, 0x44, 0x24, 0x04, 0x69, 0xc0, 0xe8, 0x03, 0x00, 0x00], on: [0xb8, 0x58, 0x3e, 0x0f, 0x00, 0x90, 0x90, 0x90, 0x90, 0x90]}
+                        ]
+                    },
+                    {
+                        name: "Unlimited maximum tracks",
+                        tooltip: "Must check to play more than 7 tracks per credit",
+                        patches: [
+                            {offset: 0x71E2E0, off: [0xf0], on: [0xc0]}
+                        ]
+                    },
+                    {
+                        type: "number",
+                        name: "Maximum tracks",
+                        offset: 0x3980C1,
+                        size: 4,
+                        min: 3,
+                        max: 12
+                    },
+                    {
+                        name: "No encryption",
+                        tooltip: "Will also disable TLS",
+                        patches: [
+                            {offset: 0x1DE29E8, off: [0xE1], on: [0x00]},
+                            {offset: 0x1DE29EC, off: [0xE1], on: [0x00]}
+                        ]
+                    },
+                    {
+                        name: "No TLS",
+                        tooltip: "Title server workaround",
+                        patches: [
+                            {offset: 0xF06447, off: [0x80], on: [0x00]}
+                        ]
+                    },
+                    {
+                        name: "Patch for head-to-head play",
+                        tooltip: "Fix infinite sync while trying to connect to head to head play",
+                        patches: [
+                            {offset: 0x6533A3, off: [0x01], on: [0x00]}
+                        ]
+                    },
+                    {
+                        name: "Bypass 1080p monitor check",
+                        patches: [
+                            {offset: 0x1CCBF, off: [0x81, 0xbc, 0x24, 0xb8, 0x02, 0x00, 0x00, 0x80, 0x07, 0x00, 0x00, 0x75, 0x1f, 0x81, 0xbc, 0x24, 0xbc, 0x02, 0x00, 0x00, 0x38, 0x04, 0x00, 0x00, 0x75, 0x12], on: [0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90]}
+                        ]
+                    },
+                    {
+                        name: "Bypass 120Hz monitor check",
+                        patches: [
+                            {offset: 0x1CCB1, off: [0x85, 0xc0], on: [0xeb, 0x30]}
+                        ]
+                    }
+                ]),
+			]);
+            new PatchContainer([
+                new Patcher("amdaemon.exe", "2.25.00", [
+                    {
+                        name: "Allow 127.0.0.1/localhost as the network server",
+                        patches: [
+                            {offset: 0x6E28A4, off: [0x31, 0x32, 0x37, 0x2F], on: [0x30, 0x2F, 0x38, 0x00]},
+                            {offset: 0x3C94C4, off: [0xFF, 0x15, 0xC6, 0x2F, 0x1B, 0x00, 0x8B], on: [0x33, 0xC0, 0x48, 0x83, 0xC4, 0x28, 0xC3]}
+                        ]
+                    },
+                    {
+                        name: "Infinite credits",
+                        patches: [
+                            {offset: 0x2BBBC8, off: [0x28], on: [0x08]}
+                        ]
+                    }
+                ])
+            ]);
+        });
+    </script>
+</head>
+
+<body>
+    <h1>CHUNITHM LUMINOUS PLUS Modder</h1>
+</body>
+
+</html>
