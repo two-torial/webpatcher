@@ -31,11 +31,28 @@
                         ]
                     },
                     {
-                        name: "Set all timers to 999",
-                        danger: "Breaks online matching functionality",
-                        patches: [
-                            {offset: 0x804c60, off: [0x8b, 0x44, 0x24, 0x04, 0x69, 0xc0, 0xe8, 0x03, 0x00, 0x00], on: [0xb8, 0x58, 0x3e, 0x0f, 0x00, 0x90, 0x90, 0x90, 0x90, 0x90]}
-                        ]
+                        name: "Map selection timer",
+                        type: "number",
+                        offset: 0x8DF920,
+                        size: 1,
+                        min: 1,
+                        max: 127,
+                    },
+                    {
+                        name: "Ticket selection timer",
+                        type: "number",
+                        offset: 0x8D37B2,
+                        size: 1,
+                        min: 1,
+                        max: 127,
+                    },
+                    {
+                        name: "Course selection timer",
+                        type: "number",
+                        offset: 0x977D5B,
+                        size: 1,
+                        min: 1,
+                        max: 127,
                     },
                     {
                         name: "Unlimited maximum tracks",
@@ -121,7 +138,14 @@
                         patches: [
                             {offset: 0x37e24b, off: [0x75], on: [0xeb]}
                         ]
-                    }
+                    },
+                    {
+                        name: "Set all timers to 999",
+                        danger: "[DEPRECATED] Breaks online matching functionality",
+                        patches: [
+                            {offset: 0x804c60, off: [0x8b, 0x44, 0x24, 0x04, 0x69, 0xc0, 0xe8, 0x03, 0x00, 0x00], on: [0xb8, 0x58, 0x3e, 0x0f, 0x00, 0x90, 0x90, 0x90, 0x90, 0x90]}
+                        ]
+                    },
                 ])
             ]);
             new PatchContainer([

@@ -37,10 +37,28 @@
                         ],
                     },
                     {
-                        name: "Set All Timers to 999",
-                        patches: [
-                            { offset: 0x8393D0, off: [0x8B, 0x44, 0x24, 0x04, 0x69, 0xC0, 0xE8, 0x03, 0x00, 0x00], on: [0xB8, 0x58, 0x3E, 0x0F, 0x00, 0x90, 0x90, 0x90, 0x90, 0x90] },
-                        ],
+                        name: "Map selection timer",
+                        type: "number",
+                        offset: 0x91C340,
+                        size: 1,
+                        min: 1,
+                        max: 127,
+                    },
+                    {
+                        name: "Ticket selection timer",
+                        type: "number",
+                        offset: 0x910062,
+                        size: 1,
+                        min: 1,
+                        max: 127,
+                    },
+                    {
+                        name: "Course selection timer",
+                        type: "number",
+                        offset: 0x9B896B,
+                        size: 1,
+                        min: 1,
+                        max: 127,
                     },
                     {
                         name: "Patch for head-to-head play",
@@ -111,6 +129,13 @@
                         danger: "[DEPRECATED] Check to make the 120hz check pass always (don't use this with the CVT Mode patch)",
                         patches: [
                             { offset: 0x1CCB1, off: [0x85, 0xC0], on: [0xEB, 0x30] },
+                        ],
+                    },
+                    {
+                        name: "Set All Timers to 999",
+                        danger: "[DEPRECATED] Breaks online matching functionality",
+                        patches: [
+                            { offset: 0x8393D0, off: [0x8B, 0x44, 0x24, 0x04, 0x69, 0xC0, 0xE8, 0x03, 0x00, 0x00], on: [0xB8, 0x58, 0x3E, 0x0F, 0x00, 0x90, 0x90, 0x90, 0x90, 0x90] },
                         ],
                     },
                 ])
