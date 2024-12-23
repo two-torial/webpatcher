@@ -178,6 +178,21 @@
                     }
                 ])
             ]);
+            new PatchContainer([
+                new Patcher("chu.acf", "chu.acf", [
+                    {
+                        name: "Force audio output as headphone",
+                        tooltip: "If you can’t hear audio on title screen, it is normal",
+                        patches: [
+                            {
+                                offset: 0xCE8,
+                                off: [0x01],
+                                on: [0x00],
+                            },
+                        ],
+                    },
+                ])
+            ]);
         });
     </script>
 </head>
