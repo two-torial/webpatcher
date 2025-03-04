@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>CHUNITHM Intl. SUN PLUS Modder</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script type="text/javascript" src="js/dllpatcher.js"></script>
+    <script type="text/javascript">
+        window.addEventListener("load", function () {
+            new PatchContainer([
+                new Patcher("chusanApp.exe", "1.25", [
+                    {
+                        name: "Force shared audio mode, system audio sample rate must be 48000Hz",
+                        tooltip: "Improves compatibility, but may increase latency",
+                        patches: [
+                            {offset: 0xECCA0A, off: [0x01], on: [0x00]}
+                        ]
+                    },
+                    {
+                        name: "Force 2 channel audio output",
+                        tooltip: "May cause bass overload",
+                        patches: [
+                            {offset: 0xECCAE1, off: [0x75, 0x3f], on: [0x90, 0x90]}
+                        ]
+                    },
+                    {
+                        name: "Disable song select timer",
+                        patches: [
+                            {offset: 0x9BB95B, off: [0x74], on: [0xeb]}
+                        ]
+                    },
+                    {
+                        name: "Map selection timer",
+                        tooltip: "If set to negative, the timer becomes 968 + value (e.g. 968 + -1 = 967)",
+                        type: "number",
+                        offset: 0x92A010,
+                        size: 1,
+                        min: -128,
+                        max: 127,
+                    },
+                    {
+                        name: "Ticket selection timer",
+                        tooltip: "If set to negative, the timer becomes 968 + value (e.g. 968 + -1 = 967)",
+                        type: "number",
+                        offset: 0x91DD22,
+                        size: 1,
+                        min: -128,
+                        max: 127,
+                    },
+                    {
+                        name: "Course selection timer",
+                        tooltip: "If set to negative, the timer becomes 968 + value (e.g. 968 + -1 = 967)",
+                        type: "number",
+                        offset: 0x9C63CB,
+                        size: 1,
+                        min: -128,
+                        max: 127,
+                    },
+                    {
+                        name: "Unlimited maximum tracks",
+                        tooltip: "Must check to play more than 7 tracks per credit",
+                        patches: [
+                            {offset: 0x6F640A, off: [0xf0], on: [0xc0]}
+                        ]
+                    },
+                    {
+                        type: "number",
+                        name: "Maximum tracks",
+                        offset: 0x397AE1,
+                        size: 4,
+                        min: 3,
+                        max: 12
+                    },
+                    {
+                        name: "No encryption",
+                        tooltip: "Will also disable TLS",
+                        patches: [
+                            {offset: 0x1D5CB68, off: [0x7D], on: [0x00]},
+                            {offset: 0x1D5CB6C, off: [0x7D], on: [0x00]}
+                        ]
+                    },
+                    {
+                        name: "No TLS",
+                        tooltip: "Title server workaround",
+                        patches: [
+                            {offset: 0xEAFA77, off: [0x80], on: [0x00]}
+                        ]
+                    },
+                    {
+                        name: "Patch for head-to-head play",
+                        tooltip: "Fix infinite sync while trying to connect to head to head play",
+                        patches: [
+                            {offset: 0x62D7A3, off: [0x01], on: [0x00]}
+                        ]
+                    },
+                    {
+                        name: "Force 120 fps",
+                        tooltip: "Force the game to run in 120 Hz mode.",
+                        patches: [
+                            { offset: 0x1CC89, off: [0x00], on: [0x01] }
+                        ]
+                    },
+                    {
+                        name: "Force FREE PLAY credit text",
+                        tooltip: "Replaces the credit count with FREE PLAY",
+                        patches: [
+                            {offset: 0x386FD4, off: [0x3c, 0x01], on: [0x38, 0xc0]}
+                        ]
+                    },
+                    {
+                        type: "number",
+                        name: "Custom FREE PLAY text length",
+                        tooltip: "Changes the length of the text displayed when Force FREE PLAY credit text is enabled",
+						danger: "If this is longer than 11 characters, \"Force FREE PLAY credit text\" MUST be enabled.",
+                        offset: 0x386FD9,
+                        size: 1,
+                        min: 0,
+                        max: 27,
+                    },
+                    {
+                        type: "hex",
+                        name: "Custom FREE PLAY text",
+                        tooltip: "Replace the FREE PLAY text when using Infinite credits",
+                        offset: 0x197BF0C,
+                        off: [0x46, 0x52, 0x45, 0x45, 0x20, 0x50, 0x4c, 0x41, 0x59],
+                    },
+                    {
+                        name: "Disable shop close lockout",
+                        danger: "[DEPRECATED] Just disable it in the test menu",
+                        patches: [
+                            {offset: 0xBB9933, off: [0x74], on: [0xeb]}
+                        ]
+                    },
+                    {
+                        name: "Bypass LED board check",
+                        danger: "[DEPRECATED] Forces LED board check to good and auto continues",
+                        patches: [
+                            {offset: 0x98DAAA, off: [0x01], on: [0x00]},
+                            {offset: 0x98DAAF, off: [0x00], on: [0x01]}
+                        ]
+                    },
+                    {
+                        name: "Ignore some errors from amdaemon",
+                        danger: "[DEPRECATED] May relieve some errors like error 6401, but may also cause problems elsewhere.",
+                        patches: [
+                            {offset: 0x37CEBB, off: [0x75], on: [0xeb]}
+                        ]
+                    },
+                    {
+                        name: "Set all timers to 999",
+                        danger: "[DEPRECATED] Breaks online matching functionality",
+                        patches: [
+                            {offset: 0x845990, off: [0x8b, 0x44, 0x24, 0x04, 0x69, 0xc0, 0xe8, 0x03, 0x00, 0x00], on: [0xb8, 0x58, 0x3e, 0x0f, 0x00, 0x90, 0x90, 0x90, 0x90, 0x90]}
+                        ]
+                    },
+                ]),
+			]);
+            new PatchContainer([
+                new Patcher("amdaemon.exe", "18b7e916", [
+                    {
+                        name: "Allow 127.0.0.1/localhost as the network server",
+                        patches: [
+                            { offset: 0x68F4C4, off: [0x31, 0x32, 0x37, 0x2F], on: [0x30, 0x2F, 0x38, 0x00] },
+                            { offset: 0x3974D4, off: [0xFF, 0x15, 0xBE, 0x5F, 0x1A, 0x00, 0x8B], on: [0x33, 0xC0, 0x48, 0x83, 0xC4, 0x28, 0xC3] }
+                        ]
+                    },
+                    {
+                        name: "Credit freeze",
+                        tooltip: "Prevents credits from being used. At least one credit must be available to start the game or purchase premium tickets.",
+                        patches: [
+                            { offset: 0x2AEAB8, off: [0x28], on: [0x08] }
+                        ]
+                    },
+                    {
+                        name: "OpenSSL SHA crash bug fix",
+                        tooltip: "Fix crashes on 10th generation and newer Intel CPUs",
+                        patches: [
+                            { offset: 0x4A4243, off: [0x48], on: [0x4c] },
+                            { offset: 0x4A424B, off: [0x48], on: [0x49] },
+                        ]
+                    },
+                ]),
+            ]);
+        });
+    </script>
+</head>
+
+<body>
+    <h1>CHUNITHM Intl. SUN PLUS Modder</h1>
+</body>
+
+</html>
