@@ -696,6 +696,117 @@ var loadPatch = function(_this, self, patcher) {
     self.successDiv.innerHTML = successStr + " loaded successfully!";
 };
 
+/**
+ * Check if the input is a PE executable, and if it is, parses the PE
+ * just enough to see if it's packed with HyperTech CrackProof, by
+ * checking if the first DLL import is "KeRnEl32.dLl".
+ * 
+ * If there was any error parsing the executable or if it was packed,
+ * this function returns a string. If there were no errors, this returns
+ * undefined.
+ * 
+ * @param {Uint8Array} dllFile 
+ * @returns {string | undefined}
+ */
+var checkUnpackedExecutable = function(dllFile) {
+    // Note to anyone looking: all offsets are absolute file offsets.
+
+    const DOS_EXECUTABLE_MAGIC = [0x4D, 0x5A];
+    const PE_EXECUTABLE_MAGIC = [0x50, 0x45, 0x00, 0x00];
+    const PE_ROM_MAGIC = 0x107;
+    const PE32_MAGIC = 0x10B;
+    const PE32_PLUS_MAGIC = 0x20B;
+    const OFFSET_IMAGE_OPTIONAL_HEADER32_NUMBER_OF_RVAS = 0x5C;
+    const OFFSET_IMAGE_OPTIONAL_HEADER64_NUMBER_OF_RVAS = 0x6C;
+    const SIZEOF_IMAGE_IMPORT_DESCRIPTOR = 0x28;
+    const CRACKPROOF_KERNEL32_DLL = [
+        0x4B, 0x65, 0x52, 0x6E, 0x45, 0x6C, 0x33, 0x32, 0x2E, 0x64, 0x4C, 0x6C, 0x00
+    ]; // "KeRnEl32.dLl\0"
+
+    // We do have patchers for other types of files, like chu.acf,
+    // so skip the check if we're not looking at a PE executable.
+    if (!bytesMatch(dllFile, 0x00, DOS_EXECUTABLE_MAGIC)) {
+        return undefined;
+    }
+
+    const dllFileView = new DataView(dllFile.buffer);
+    const peHeaderOffset = dllFileView.getUint32(0x3C, true);  // e_lfanew
+    
+    if (!bytesMatch(dllFile, peHeaderOffset, PE_EXECUTABLE_MAGIC)) {
+        // Probably a file that accidentally looks like a DOS executable...
+        return undefined;
+    }
+
+    const numberOfSections = dllFileView.getUint16(peHeaderOffset + 0x06, true);
+    const sizeOfOptionalHeader = dllFileView.getUint16(peHeaderOffset + 0x14, true);
+    const startOfOptionalHeader = peHeaderOffset + 0x18;
+    const startOfSections = startOfOptionalHeader + sizeOfOptionalHeader;
+
+    const rva2offset = (rva) => {
+        for (let i = 0; i < numberOfSections; i++) {
+            const sectionHeaderOffset = startOfSections + 0x28 * i;
+            const virtualSize = dllFileView.getUint32(sectionHeaderOffset + 0x08, true);
+            const virtualAddress = dllFileView.getUint32(sectionHeaderOffset + 0x0C, true);
+            const pointerToRawData = dllFileView.getUint32(sectionHeaderOffset + 0x14, true);
+    
+            if (virtualAddress <= rva && (virtualAddress + virtualSize) > rva) {
+                return rva - virtualAddress + pointerToRawData;
+            }
+        }
+        
+        return -1;
+    };
+
+    const magic = dllFileView.getUint16(startOfOptionalHeader, true);
+
+    if (![PE_ROM_MAGIC, PE32_MAGIC, PE32_PLUS_MAGIC].includes(magic)) {
+        return `Unknown PE format ${magic}.`;
+    }
+
+    const numberOfRvaAndSizesOffset = startOfOptionalHeader + (
+        magic === PE32_PLUS_MAGIC
+            ? OFFSET_IMAGE_OPTIONAL_HEADER64_NUMBER_OF_RVAS
+            : OFFSET_IMAGE_OPTIONAL_HEADER32_NUMBER_OF_RVAS
+        );
+    const numberOfRvaAndSizes = dllFileView.getUint32(numberOfRvaAndSizesOffset, true);
+
+    // No import directory, apparently. Not our problem then.
+    if (numberOfRvaAndSizes < 2) {
+        return undefined;
+    }
+
+    const startOfDataDirectories = numberOfRvaAndSizesOffset + 0x04;
+
+    // The import directory is the second directory (index 1), as can be seen in winnt.h:
+    //     #define IMAGE_DIRECTORY_ENTRY_IMPORT          1
+    const importDirectoryRva = dllFileView.getUint32(startOfDataDirectories + 0x08, true);
+    const importDirectorySize = dllFileView.getUint32(startOfDataDirectories + 0x0C, true);
+
+    // No imports, also not our problem.
+    if (importDirectorySize < SIZEOF_IMAGE_IMPORT_DESCRIPTOR) {
+        return undefined;
+    }
+
+    const importDirectoryOffset = rva2offset(importDirectoryRva);
+
+    if (importDirectoryOffset === -1) {
+        return "Could not convert import directory RVA to offset.";
+    }
+
+    const importDllNameRva = dllFileView.getUint32(importDirectoryOffset + 12, true);
+    const importDllNameOffset = rva2offset(importDllNameRva);
+
+    if (importDllNameOffset === -1) {
+        return "Could not convert import DLL name RVA to offset.";
+    }
+
+    if (bytesMatch(dllFile, importDllNameOffset, CRACKPROOF_KERNEL32_DLL)) {
+        return "This executable is packed with CrackProof. Please obtain an unpacked executable.";
+    }
+
+    return undefined;
+}
+
 class PatchContainer {
     constructor(patchers) {
         this.patchers = patchers;
@@ -805,6 +916,14 @@ class PatchContainer {
             // clear logs
             self.errorDiv.textContent = '';
             self.successDiv.textContent = '';
+
+            const error = checkUnpackedExecutable(new Uint8Array(e.target.result));
+
+            if (error) {
+                self.errorDiv.innerHTML = error;
+                return;
+            }
+
             for (var i = 0; i < self.patchers.length; i++) {
                 // reset text and buttons
                 self.forceLoadButtons[i].style.display = 'none';
